@@ -1,0 +1,92 @@
+#messages-card {
+  height: 100%;
+  padding-bottom: 0;
+}
+
+#messages-card {
+  margin-top: 15px;
+}
+
+.mdl-card__supporting-text {
+  width: auto;
+  height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#messages {
+  overflow-y: auto;
+  margin-bottom: 10px;
+  height: calc(100% - 80px);
+  display: flex;
+  flex-direction: column;
+}
+
+#message-filler {
+  flex-grow: 1;
+}
+
+#message-form {
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 48px);
+  float: left;
+}
+
+#image-form {
+  display: flex;
+  flex-direction: row;
+  width: 48px;
+  float: right;
+}
+
+#message-form .mdl-textfield {
+  width: calc(100% - 100px);
+}
+
+#message-form button,
+#image-form button {
+  width: 100px;
+  margin: 15px 0 0 10px;
+}
+
+.mdl-card {
+  min-height: 0;
+}
+
+.mdl-card {
+  background: linear-gradient(white, #f9f9f9);
+  justify-content: space-between;
+}
+
+#image-form #submitImage {
+  width: auto;
+  padding: 0 6px 0 1px;
+  min-width: 0;
+}
+
+#image-form #submitImage .material-icons {
+  top: -1px;
+}
+
+.message img {
+  max-width: 300px;
+  max-height: 200px;
+}
+
+#mediaCapture {
+  display: none;
+}
+
+.mdl-textfield__label:after {
+  background-color: #0288d1;
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label {
+  color: #0288d1;
+}
+
+.mdl-button .material-icons {
+  top: -1px;
+  margin-right: 5px;
+}

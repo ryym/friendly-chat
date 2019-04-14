@@ -1,0 +1,16 @@
+.mdl-layout__header-row {
+  padding: 0;
+  margin: 0 auto;
+}
+
+.mdl-layout__header-row span {
+  margin-left: 15px;
+  margin-top: 17px;
+}
+
+@media screen and (max-width: 610px) {
+  header {
+    height: 113px;
+    padding-bottom: 80px !important;
+  }
+}

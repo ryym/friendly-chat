@@ -1,0 +1,19 @@
+html,
+body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+main {
+  height: 100%;
+  padding-bottom: 0;
+}
+
+.mdl-grid {
+  max-width: 1024px;
+  margin: auto;
+}
+.material-icons {
+  font-size: 36px;
+  top: 8px;
+  position: relative;
+}
