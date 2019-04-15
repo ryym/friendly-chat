@@ -1,19 +1,30 @@
 import React from 'react';
+import { connect } from 'redy';
+import { State } from '../../state';
+import { User } from '../../backend/types';
+import { WithDispatch } from '../types';
+import { SignIn, SignOut } from '../../store/actions';
 
 export type Props = Readonly<{
-  user?: any; // TODO: Define user type.
+  user: User | null;
 }>;
 
-export const UserStatus = ({ user }: Props) => {
+export const _UserStatus = ({ user, dispatch }: WithDispatch<Props>) => {
   return (
     <div id="user-container">
       {user && (
         <>
-          <div id="user-pic" />
-          <div id="user-name" />
+          <div
+            id="user-pic"
+            style={{
+              backgroundImage: `url(${addSizeToGoogleProfilePic(user.photoURL)})`,
+            }}
+          />
+          <div id="user-name">{user.displayName}</div>
           <button
             id="sign-out"
             className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white"
+            onClick={() => dispatch(SignOut)}
           >
             Sign-out
           </button>
@@ -23,6 +34,7 @@ export const UserStatus = ({ user }: Props) => {
         <button
           id="sign-in"
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white"
+          onClick={() => dispatch(SignIn)}
         >
           <i className="material-icons">account_circle</i>
           Sign-in with Google
@@ -31,3 +43,12 @@ export const UserStatus = ({ user }: Props) => {
     </div>
   );
 };
+
+export const UserStatus = connect(({ user }: State) => ({ user }))(_UserStatus);
+
+function addSizeToGoogleProfilePic(url: string): string {
+  if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
+    return `${url}?sz=150`;
+  }
+  return url;
+}

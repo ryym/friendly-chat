@@ -1,11 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'redy';
 import { App } from './components/App';
+import { configureStore } from './store';
+import { initializeBackend } from './backend/app';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const main = async () => {
+  await initializeBackend();
 
-// TODO: Dicide whether to use the default service worker script or not.
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
+  const store = configureStore();
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root')
+  );
+
+  // TODO: Dicide whether to use the default service worker script or not.
+  // If you want your app to work offline and load faster, you can change
+  // unregister() to register() below. Note this comes with some pitfalls.
+  // Learn more about service workers: https://bit.ly/CRA-PWA
+  // serviceWorker.unregister();
+};
+
+main();
