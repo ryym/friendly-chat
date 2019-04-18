@@ -2,11 +2,11 @@ import firebase from 'firebase/app';
 
 export const initializeBackend = () => {
   firebase.initializeApp({
-    apiKey: 'AIzaSyDhDgoVYUTwO0Jys858I0LrGWYRM9XLdY4',
-    authDomain: 'friendlychat2-3345b.firebaseapp.com',
-    databaseURL: 'https://friendlychat2-3345b.firebaseio.com',
-    projectId: 'friendlychat2-3345b',
-    storageBucket: 'friendlychat2-3345b.appspot.com',
-    messagingSenderId: '1009353431094',
+    apiKey: 'AIzaSyD7LaZQLhvTbWkElonT_MmYFpWRTczsxKc',
+    authDomain: 'friendlychat3-b33bb.firebaseapp.com',
+    databaseURL: 'https://friendlychat3-b33bb.firebaseio.com',
+    projectId: 'friendlychat3-b33bb',
+    storageBucket: 'friendlychat3-b33bb.appspot.com',
+    messagingSenderId: '974374610585',
   });
 };
