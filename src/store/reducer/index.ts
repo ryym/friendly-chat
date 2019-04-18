@@ -18,7 +18,7 @@ const reduceMessages = defineReducer<SavedMessage[]>(
     on(DisplayMessage, (msgs, msg) => {
       msgs = [...msgs];
       const idx = msgs.findIndex(m => m.id === msg.id);
-      if (idx) {
+      if (idx >= 0) {
         msgs[idx] = msg;
       } else {
         msgs.push(msg);
