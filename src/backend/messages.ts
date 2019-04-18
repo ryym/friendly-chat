@@ -80,11 +80,14 @@ export type MessageFeed =
   | { type: 'removed'; id: string }
   | { type: 'modified' | 'added'; message: SavedMessage };
 
-export const subscribeMessageFeed = (consumer: (feed: MessageFeed) => void) => {
+export const subscribeMessageFeed = (
+  consumer: (feed: MessageFeed) => void
+): firebase.Unsubscribe => {
   const query = messages()
     .orderBy('timestamp', 'desc')
     .limit(12);
-  query.onSnapshot(snapshot => {
+
+  return query.onSnapshot(snapshot => {
     snapshot.docChanges().forEach(change => {
       if (change.type === 'removed') {
         return consumer({ type: change.type, id: change.doc.id });

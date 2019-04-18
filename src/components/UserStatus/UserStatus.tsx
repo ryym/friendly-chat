@@ -4,6 +4,7 @@ import { State } from '../../state';
 import { User } from '../../backend/types';
 import { WithDispatch } from '../types';
 import { SignIn, SignOut } from '../../store/actions';
+import { addSizeToGoogleProfilePic } from '../../lib/profile-pic';
 
 export type Props = Readonly<{
   user: User | null;
@@ -45,10 +46,3 @@ export const _UserStatus = ({ user, dispatch }: WithDispatch<Props>) => {
 };
 
 export const UserStatus = connect(({ user }: State) => ({ user }))(_UserStatus);
-
-function addSizeToGoogleProfilePic(url: string): string {
-  if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
-    return `${url}?sz=150`;
-  }
-  return url;
-}

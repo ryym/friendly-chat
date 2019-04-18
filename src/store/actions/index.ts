@@ -38,8 +38,8 @@ export const SendImage = (file: File) =>
   });
 
 export const SubscribeMessageFeed = () =>
-  effect<Thunk>(async dispatch => {
-    messages.subscribeMessageFeed(feed => {
+  effect<Thunk<firebase.Unsubscribe>>(async dispatch => {
+    return messages.subscribeMessageFeed(feed => {
       if (feed.type === 'removed') {
         dispatch(DeleteMessage, feed.id);
       } else {

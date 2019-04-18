@@ -1,6 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'redy';
+import { WithDispatch } from '../types';
+import { SendMessage, SubscribeMessageFeed } from '../../store/actions';
+import { State } from '../../state';
+import { SavedMessage } from '../../backend/types';
+import { MessageItem } from './MessageItem';
+import { MessageForm } from './MessageForm';
+import { ImageForm } from './ImageForm';
 
-export const MessageList = () => {
+export type Props = Readonly<{
+  messages: SavedMessage[];
+}>;
+
+const unsubscribeAsync = (promise: Promise<() => void>) => () => {
+  promise.then(unsubscribe => unsubscribe());
+};
+
+export const _MessageList = ({ dispatch, messages }: WithDispatch<Props>) => {
+  useEffect(() => {
+    const { promise } = dispatch(SubscribeMessageFeed);
+    return unsubscribeAsync(promise);
+  }, []);
+
   return (
     <div
       id="messages-card"
@@ -8,35 +29,15 @@ export const MessageList = () => {
     >
       <div className="mdl-card__supporting-text mdl-color-text--grey-600">
         <div id="messages">
-          <span id="message-filler" />
+          {messages.map(msg => (
+            <MessageItem message={msg} key={msg.id} />
+          ))}
         </div>
-        <form id="message-form" action="#">
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input className="mdl-textfield__input" type="text" id="message" />
-            <label className="mdl-textfield__label" htmlFor="message">
-              Message...
-            </label>
-          </div>
-          <button
-            id="submit"
-            disabled
-            type="submit"
-            className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-          >
-            Send
-          </button>
-        </form>
-        <form id="image-form" action="#">
-          <input id="mediaCapture" type="file" accept="image/*" capture="camera" />
-          <button
-            id="submitImage"
-            title="Add an image"
-            className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white"
-          >
-            <i className="material-icons">image</i>
-          </button>
-        </form>
+        <MessageForm onSubmit={msg => dispatch(SendMessage, msg)} />
+        <ImageForm />
       </div>
     </div>
   );
 };
+
+export const MessageList = connect(({ messages }: State) => ({ messages }))(_MessageList);
