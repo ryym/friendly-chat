@@ -15,14 +15,34 @@ const reduceMessages = defineReducer<SavedMessage[]>(
     on(DeleteMessage, (msgs, id) => {
       return msgs.filter(msg => msg.id !== id);
     }),
-    on(DisplayMessage, (msgs, msg) => {
-      msgs = [...msgs];
-      const idx = msgs.findIndex(m => m.id === msg.id);
-      if (idx >= 0) {
-        msgs[idx] = msg;
-      } else {
-        msgs.push(msg);
+
+    on(DisplayMessage, (msgs, newMsg) => {
+      if (newMsg.timestamp == null) {
+        return msgs.concat(newMsg);
       }
+
+      msgs = [...msgs];
+      let idx = null;
+      let exists = false;
+      for (let i = 0; i < msgs.length; i++) {
+        const msg = msgs[i];
+        if (msg.id === newMsg.id) {
+          idx = i;
+          exists = true;
+          break;
+        }
+        if (msg.timestamp == null || msg.timestamp > newMsg.timestamp) {
+          idx = i;
+          break;
+        }
+      }
+
+      if (idx == null) {
+        msgs.push(newMsg);
+      } else {
+        msgs.splice(idx, exists ? 1 : 0, newMsg);
+      }
+
       return msgs;
     }),
   ]

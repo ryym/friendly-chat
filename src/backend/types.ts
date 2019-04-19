@@ -12,7 +12,8 @@ export interface Message {
 
 export interface SavedMessage extends Message {
   readonly id: string;
-  // TODO: Add timestamp field.
+  // Timestamp in milli seconds.
+  readonly timestamp: number | null;
 }
 
 export type MessageContent =

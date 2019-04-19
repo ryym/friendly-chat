@@ -33,6 +33,7 @@ export const documentToMessage = (
 ): SavedMessage => {
   return {
     id,
+    timestamp: doc.timestamp ? doc.timestamp.toMillis() : null,
     name: doc.name,
     profilePicUrl: doc.profilePicUrl,
     content: doc.text
