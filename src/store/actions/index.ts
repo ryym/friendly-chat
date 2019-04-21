@@ -52,10 +52,7 @@ export const SubscribeMessageFeed = () =>
 
 export const DeleteMessage = (id: string) => action(id);
 
-export const DisplayMessage = (message: SavedMessage) =>
-  action(message).effect(async dispatch => {
-    dispatch(InputMessage, '');
-  });
+export const DisplayMessage = (message: SavedMessage) => action(message);
 
 export const SaveDeviceToken = () =>
   effect<Thunk>(async (_dispatch, _state) => {

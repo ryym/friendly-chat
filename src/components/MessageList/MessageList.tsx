@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { connect } from 'redy';
+import { connect, Dispatch } from 'redy';
 import { WithDispatch } from '../types';
 import {
   SendMessage,
@@ -19,27 +19,20 @@ export type Props = Readonly<{
   messages: SavedMessage[];
 }>;
 
-const unsubscribeAsync = (promise: Promise<() => void>) => () => {
-  promise.then(unsubscribe => unsubscribe());
-};
-
 export const _MessageList = ({
   dispatch,
   userSignedIn,
   message,
   messages,
 }: WithDispatch<Props>) => {
-  useEffect(() => {
-    const { promise } = dispatch(SubscribeMessageFeed);
-    return unsubscribeAsync(promise);
-  }, []);
+  subscribeMessageFeed(dispatch);
 
   const messageList = useRef<HTMLDivElement>(null);
+  adjustMessageListScrollPos(messages, messageList);
 
   const sendMessage = (msg: string) => {
     dispatch(SendMessage, msg).promise.then(() => {
-      const list = messageList.current!;
-      list.scrollTop = list.scrollHeight;
+      dispatch(InputMessage, '');
     });
   };
 
@@ -66,6 +59,31 @@ export const _MessageList = ({
       </div>
     </div>
   );
+};
+
+const unsubscribeAsync = (promise: Promise<() => void>) => () => {
+  promise.then(unsubscribe => unsubscribe());
+};
+
+const subscribeMessageFeed = (dispatch: Dispatch) => {
+  useEffect(() => {
+    const { promise } = dispatch(SubscribeMessageFeed);
+    return unsubscribeAsync(promise);
+  }, []);
+};
+
+const adjustMessageListScrollPos = (
+  messages: SavedMessage[],
+  messageList: React.RefObject<HTMLElement | null>
+) => {
+  const messagesRef = useRef<typeof messages>([]);
+  useEffect(() => {
+    if (messagesRef.current.length !== messages.length) {
+      const list = messageList.current!;
+      list.scrollTop = list.scrollHeight;
+    }
+    messagesRef.current = messages;
+  }, [messages]);
 };
 
 export const MessageList = connect(({ user, messageInput, messages }: State) => {
