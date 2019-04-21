@@ -25,6 +25,8 @@ export const SubscribeAuthenticationChange = () =>
     });
   });
 
+export const InputMessage = (msg: string) => action(msg);
+
 export const SendMessage = (message: string) =>
   effect<Thunk>(async (_dispatch, state) => {
     const user = assertUserSignedIn(state());
@@ -50,7 +52,10 @@ export const SubscribeMessageFeed = () =>
 
 export const DeleteMessage = (id: string) => action(id);
 
-export const DisplayMessage = (message: SavedMessage) => action(message);
+export const DisplayMessage = (message: SavedMessage) =>
+  action(message).effect(async dispatch => {
+    dispatch(InputMessage, '');
+  });
 
 export const SaveDeviceToken = () =>
   effect<Thunk>(async (_dispatch, _state) => {

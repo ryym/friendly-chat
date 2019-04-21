@@ -1,7 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'redy';
 import { WithDispatch } from '../types';
-import { SendMessage, SubscribeMessageFeed, SendImage } from '../../store/actions';
+import {
+  SendMessage,
+  SubscribeMessageFeed,
+  SendImage,
+  InputMessage,
+} from '../../store/actions';
 import { State } from '../../state';
 import { SavedMessage } from '../../backend/types';
 import { MessageItem } from './MessageItem';
@@ -10,6 +15,7 @@ import { ImageForm } from './ImageForm';
 
 export type Props = Readonly<{
   userSignedIn: boolean;
+  message: string;
   messages: SavedMessage[];
 }>;
 
@@ -20,6 +26,7 @@ const unsubscribeAsync = (promise: Promise<() => void>) => () => {
 export const _MessageList = ({
   dispatch,
   userSignedIn,
+  message,
   messages,
 }: WithDispatch<Props>) => {
   useEffect(() => {
@@ -47,7 +54,11 @@ export const _MessageList = ({
             <MessageItem message={msg} key={msg.id} />
           ))}
         </div>
-        <MessageForm onSubmit={sendMessage} />
+        <MessageForm
+          message={message}
+          onMessageChange={msg => dispatch(InputMessage, msg)}
+          onSubmit={sendMessage}
+        />
         <ImageForm
           userSignedIn={userSignedIn}
           onSubmit={file => dispatch(SendImage, file)}
@@ -57,9 +68,10 @@ export const _MessageList = ({
   );
 };
 
-export const MessageList = connect(({ user, messages }: State) => {
+export const MessageList = connect(({ user, messageInput, messages }: State) => {
   return {
     userSignedIn: user != null,
+    message: messageInput,
     messages,
   };
 })(_MessageList);

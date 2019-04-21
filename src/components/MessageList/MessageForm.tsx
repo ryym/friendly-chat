@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export type Props = Readonly<{
+  message: string;
+  onMessageChange: (message: string) => void;
   onSubmit: (message: string) => void;
 }>;
 
-export const MessageForm = ({ onSubmit: handleSubmit }: Props) => {
-  const [message, setMessage] = useState('');
-
+export const MessageForm = ({
+  message,
+  onSubmit: handleSubmit,
+  onMessageChange: handleMessageChange,
+}: Props) => {
   return (
     <form
       id="message-form"
@@ -22,7 +26,7 @@ export const MessageForm = ({ onSubmit: handleSubmit }: Props) => {
           type="text"
           id="message"
           value={message}
-          onChange={event => setMessage(event.target.value)}
+          onChange={event => handleMessageChange(event.target.value)}
         />
         <label className="mdl-textfield__label" htmlFor="message">
           Message...
