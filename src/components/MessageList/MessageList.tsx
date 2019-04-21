@@ -12,6 +12,7 @@ import { SavedMessage } from '../../backend/types';
 import { MessageItem } from './MessageItem';
 import { MessageForm } from './MessageForm';
 import { ImageForm } from './ImageForm';
+import { unsubscribeAsync } from '../../lib/unsubscribe-async';
 
 export type Props = Readonly<{
   userSignedIn: boolean;
@@ -59,10 +60,6 @@ export const _MessageList = ({
       </div>
     </div>
   );
-};
-
-const unsubscribeAsync = (promise: Promise<() => void>) => () => {
-  promise.then(unsubscribe => unsubscribe());
 };
 
 const subscribeMessageFeed = (dispatch: Dispatch) => {
