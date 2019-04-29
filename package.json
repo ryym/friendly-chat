@@ -15,7 +15,7 @@
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redy": "^0.0.1",
+    "redy": "^0.0.2",
     "typescript": "3.4.3"
   },
   "scripts": {

@@ -8481,10 +8481,10 @@ redux@^4.0.1:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
 
-redy@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/redy/-/redy-0.0.1.tgz#ff71b75acb4879b861fca3ddd4dd41eb8b589a06"
-  integrity sha512-UyueFSlOT1SEHy5gZBkLpK27shRTje9HEEAl8RWXQ/BauLZSm8UEXa6RthWLzgk6jSepZCF9OhUxb2EFEjOh9Q==
+redy@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/redy/-/redy-0.0.2.tgz#56f8eba89b5f59ab2586c8157d69e2afb7003aec"
+  integrity sha512-VLuc9SA68rYMAlRFXrTpQf7niPBTbiJpP//mDtC/KGeMkttqAhtXI/6FS2j1H0gHF8Y5hBDuv7UHfbKc055hgA==
 
 regenerate-unicode-properties@^8.0.1:
   version "8.0.1"
