@@ -6,6 +6,7 @@ import {
   SubscribeMessageFeed,
   SendImage,
   InputMessage,
+  DisplayError,
 } from '../../store/actions';
 import { State } from '../../state';
 import { SavedMessage } from '../../backend/types';
@@ -43,8 +44,7 @@ export const _MessageList = ({
 
   const sendImage = (files: File[]): boolean => {
     if (!userSignedIn) {
-      // TODO: Show error message.
-      // throw new Error('you must sign in first');
+      dispatch(DisplayError, new Error('you must sign in first'));
       return false;
     }
 
@@ -54,8 +54,7 @@ export const _MessageList = ({
     }
 
     if (!file.type.match('image.*')) {
-      // TODO: Show error message.
-      // throw new Error('invalid file type');
+      dispatch(DisplayError, new Error('invalid file type'));
       return false;
     }
 
