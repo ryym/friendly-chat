@@ -1,8 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
-import { redyMiddleware } from 'redy';
-import logger from 'redux-logger';
 import { createReducer } from './reducer';
+import { listMiddlewares } from './middlewares';
 
 export const configureStore = () => {
-  return createStore(createReducer(), applyMiddleware(logger, redyMiddleware()));
+  return createStore(createReducer(), applyMiddleware(...listMiddlewares()));
 };

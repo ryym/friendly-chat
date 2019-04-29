@@ -67,9 +67,11 @@ export const SaveDeviceToken = () =>
     // }
   });
 
+export const DisplayError = (err: Error) => action(err);
+
 const assertUserSignedIn = (state: State): User => {
   if (state.user == null) {
-    throw new Error('user does not sign in yet.');
+    throw new Error('You must sign-in first');
   }
   return state.user;
 };

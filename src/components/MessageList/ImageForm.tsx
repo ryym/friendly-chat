@@ -1,36 +1,22 @@
 import React, { useRef } from 'react';
 
+type Submitted = boolean;
+
 export type Props = Readonly<{
-  userSignedIn: boolean;
-  onSubmit: (file: File) => void;
+  onSubmit: (files: File[]) => Submitted;
 }>;
 
-export const ImageForm = ({ userSignedIn, onSubmit }: Props) => {
+export const ImageForm = ({ onSubmit }: Props) => {
   const filePicker = useRef<HTMLInputElement>(null);
   const form = useRef<HTMLFormElement>(null);
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-
-    if (!userSignedIn) {
-      // TODO: Show error message.
-      throw new Error('you must sign in first');
+    const submitted = onSubmit([...event.target.files!]);
+    if (submitted) {
+      // Clear the selection in the file picker input.
+      form.current!.reset();
     }
-
-    const file = event.target.files![0];
-    if (file == null) {
-      return;
-    }
-
-    // Clear the selection in the file picker input.
-    form.current!.reset();
-
-    if (!file.type.match('image.*')) {
-      // TODO: Show error message.
-      throw new Error('invalid file type');
-    }
-
-    onSubmit(file);
   };
 
   return (

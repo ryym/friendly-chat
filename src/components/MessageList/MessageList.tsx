@@ -20,6 +20,8 @@ export type Props = Readonly<{
   messages: SavedMessage[];
 }>;
 
+const doNothing = () => {};
+
 export const _MessageList = ({
   dispatch,
   userSignedIn,
@@ -32,9 +34,33 @@ export const _MessageList = ({
   adjustMessageListScrollPos(messages, messageList);
 
   const sendMessage = (msg: string) => {
-    dispatch(SendMessage, msg).promise.then(() => {
-      dispatch(InputMessage, '');
-    });
+    dispatch(SendMessage, msg)
+      .promise.then(() => {
+        dispatch(InputMessage, '');
+      })
+      .catch(doNothing);
+  };
+
+  const sendImage = (files: File[]): boolean => {
+    if (!userSignedIn) {
+      // TODO: Show error message.
+      // throw new Error('you must sign in first');
+      return false;
+    }
+
+    const file = files[0];
+    if (file == null) {
+      return false;
+    }
+
+    if (!file.type.match('image.*')) {
+      // TODO: Show error message.
+      // throw new Error('invalid file type');
+      return false;
+    }
+
+    dispatch(SendImage, file);
+    return true;
   };
 
   return (
@@ -53,10 +79,7 @@ export const _MessageList = ({
           onMessageChange={msg => dispatch(InputMessage, msg)}
           onSubmit={sendMessage}
         />
-        <ImageForm
-          userSignedIn={userSignedIn}
-          onSubmit={file => dispatch(SendImage, file)}
-        />
+        <ImageForm onSubmit={sendImage} />
       </div>
     </div>
   );

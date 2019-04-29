@@ -5,8 +5,14 @@ import { Header } from '../Header';
 import { Chat } from '../Chat';
 import { SubscribeAuthenticationChange } from '../../store/actions';
 import { unsubscribeAsync } from '../../lib/unsubscribe-async';
+import { State } from '../../state';
+import { Snackbar } from './Snackbar';
 
-export const _App = ({ dispatch }: WithDispatch<{}>) => {
+export type Props = Readonly<{
+  error: Error | null;
+}>;
+
+export const _App = ({ error, dispatch }: WithDispatch<Props>) => {
   useEffect(() => {
     const { promise } = dispatch(SubscribeAuthenticationChange);
     return unsubscribeAsync(promise);
@@ -18,8 +24,9 @@ export const _App = ({ dispatch }: WithDispatch<{}>) => {
       <main className="mdl-layout__content mdl-color--grey-100">
         <Chat />
       </main>
+      <Snackbar message={error ? error.message : null} />
     </div>
   );
 };
 
-export const App = connect(() => ({}))(_App);
+export const App = connect(({ error }: State) => ({ error }))(_App);

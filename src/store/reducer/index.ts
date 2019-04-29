@@ -7,6 +7,7 @@ import {
   DeleteMessage,
   DisplayMessage,
   InputMessage,
+  DisplayError,
 } from '../actions';
 import { State } from '../../state';
 
@@ -56,10 +57,15 @@ const reduceMessages = defineReducer<SavedMessage[]>(
   ]
 );
 
+const reduceError = defineReducer<Error | null>(null, [
+  on(DisplayError, (_, err) => err),
+]);
+
 export const createReducer = () => {
   return combineReducers<State>({
     user: reduceUser,
     messageInput: reduceMessageInput,
     messages: reduceMessages,
+    error: reduceError,
   });
 };
