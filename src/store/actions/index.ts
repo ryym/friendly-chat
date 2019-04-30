@@ -1,6 +1,7 @@
 import { action, effect } from 'redy';
 import * as auth from '../../backend/auth';
 import * as messages from '../../backend/messages';
+import * as notif from '../../backend/notification';
 import { User, SavedMessage } from '../../backend/types';
 import { Thunk } from '../types';
 import { State } from '../../state';
@@ -64,16 +65,15 @@ export const DisplayMessage = action('DISPLAY_MESSAGE', (msg: SavedMessage) => m
 
 export const SaveDeviceToken = effect(
   'SAVE_DEVICE_TOKEN',
-  (): Thunk => async (_dispatch, _state) => {
-    // TODO: Get and save device token.
-    // const user = assertUserSignedIn(state());
-    // const token = await notif.getDeviceToken();
-    // if (token) {
-    //   await notif.saveDeviceToken(user, token);
-    // } else {
-    //   await notif.requestNotifcationsPermissions();
-    //   dispatch(SaveDeviceToken);
-    // }
+  (): Thunk => async (dispatch, state) => {
+    const user = assertUserSignedIn(state());
+    const token = await notif.getDeviceToken();
+    if (token) {
+      await notif.saveDeviceToken(user, token);
+    } else {
+      await notif.requestNotifcationsPermissions();
+      dispatch(SaveDeviceToken());
+    }
   }
 );
 
