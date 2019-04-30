@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { WithDispatch } from '../types';
 import { Header } from '../Header';
-import { Chat } from '../Chat';
+import { MessageList } from '../MessageList';
 import { SubscribeAuthenticationChange } from '../../store/actions';
 import { unsubscribeAsync } from '../../lib/unsubscribe-async';
 import { State } from '../../state';
@@ -22,7 +22,9 @@ export const _App = ({ error, dispatch }: WithDispatch<Props>) => {
     <div className="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <Header />
       <main className="mdl-layout__content mdl-color--grey-100">
-        <Chat />
+        <div id="messages-card-container" className="mdl-cell mdl-cell--12-col mdl-grid">
+          <MessageList />
+        </div>
       </main>
       <Snackbar message={error ? error.message : null} />
     </div>

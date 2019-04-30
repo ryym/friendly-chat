@@ -30,6 +30,9 @@ const reduceMessages = defineReducer<SavedMessage[]>(
         return msgs.concat(newMsg);
       }
 
+      // Add a message in the message list which is sorted by their timestamp.
+      // A new message may not have a timestamp yet. In that case,
+      // the same message is dispatched again soon by updated its timestamp.
       msgs = [...msgs];
       let idx = null;
       let exists = false;

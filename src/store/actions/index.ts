@@ -16,7 +16,7 @@ export const SignOutOk = action('SIGN_OUT_OK', () => {});
 
 export const SubscribeAuthenticationChange = effect(
   'SUBSCRIBE_AUTHENTICATION_CHANGE',
-  () => async dispatch => {
+  (): Thunk<firebase.Unsubscribe> => async dispatch => {
     return auth.subscribeAuthenticationChange(user => {
       if (user) {
         dispatch(SignInOk(user));
