@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'redy';
+import { connect } from 'react-redux';
 import { State } from '../../state';
 import { User } from '../../backend/types';
 import { WithDispatch } from '../types';
@@ -25,7 +25,7 @@ export const _UserStatus = ({ user, dispatch }: WithDispatch<Props>) => {
           <button
             id="sign-out"
             className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white"
-            onClick={() => dispatch(SignOut)}
+            onClick={() => dispatch(SignOut())}
           >
             Sign-out
           </button>
@@ -35,7 +35,7 @@ export const _UserStatus = ({ user, dispatch }: WithDispatch<Props>) => {
         <button
           id="sign-in"
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white"
-          onClick={() => dispatch(SignIn)}
+          onClick={() => dispatch(SignIn())}
         >
           <i className="material-icons">account_circle</i>
           Sign-in with Google

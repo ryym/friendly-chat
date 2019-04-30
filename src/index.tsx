@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'redy';
+import { Provider } from 'react-redux';
 import { App } from './components/App';
 import { configureStore } from './store';
 import { initializeBackend } from './backend/app';

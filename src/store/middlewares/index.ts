@@ -1,6 +1,6 @@
 import { Middleware, Dispatch, AnyAction } from 'redux';
 import logger from 'redux-logger';
-import { redyMiddleware, isRedyAction, wrapDispatch } from 'redy';
+import { redyMiddleware, isRedyAction } from 'redy';
 import { State } from '../../state';
 import { DisplayError } from '../actions';
 
@@ -10,16 +10,14 @@ export const listMiddlewares = () => {
 
 // Catch errors thrown in action and dispatch the error handling action.
 export const errorCatcher = (): Middleware<{}, State, Dispatch<AnyAction>> => ({
-  dispatch: originalDispatch,
+  dispatch,
 }) => {
-  const dispatch = wrapDispatch(originalDispatch);
-
   const dispatchError = (err: any) => {
     console.error('[error catch midleware] ERROR', err);
     if (err instanceof Error) {
-      dispatch(DisplayError, err);
+      dispatch(DisplayError(err));
     } else {
-      dispatch(DisplayError, new Error(`unknown error: ${err}`));
+      dispatch(DisplayError(new Error(err)));
     }
   };
 

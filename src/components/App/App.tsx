@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'redy';
+import { connect } from 'react-redux';
 import { WithDispatch } from '../types';
 import { Header } from '../Header';
 import { Chat } from '../Chat';
@@ -14,7 +14,7 @@ export type Props = Readonly<{
 
 export const _App = ({ error, dispatch }: WithDispatch<Props>) => {
   useEffect(() => {
-    const { promise } = dispatch(SubscribeAuthenticationChange);
+    const { promise } = dispatch(SubscribeAuthenticationChange());
     return unsubscribeAsync(promise);
   }, []);
 

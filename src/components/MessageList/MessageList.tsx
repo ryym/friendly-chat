@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { connect, Dispatch } from 'redy';
+import { connect } from 'react-redux';
 import { WithDispatch } from '../types';
 import {
   SendMessage,
@@ -14,6 +14,7 @@ import { MessageItem } from './MessageItem';
 import { MessageForm } from './MessageForm';
 import { ImageForm } from './ImageForm';
 import { unsubscribeAsync } from '../../lib/unsubscribe-async';
+import { Dispatch } from 'redux';
 
 export type Props = Readonly<{
   userSignedIn: boolean;
@@ -35,16 +36,16 @@ export const _MessageList = ({
   adjustMessageListScrollPos(messages, messageList);
 
   const sendMessage = (msg: string) => {
-    dispatch(SendMessage, msg)
+    dispatch(SendMessage(msg))
       .promise.then(() => {
-        dispatch(InputMessage, '');
+        dispatch(InputMessage(''));
       })
       .catch(doNothing);
   };
 
   const sendImage = (files: File[]): boolean => {
     if (!userSignedIn) {
-      dispatch(DisplayError, new Error('you must sign in first'));
+      dispatch(DisplayError(new Error('you must sign in first')));
       return false;
     }
 
@@ -54,11 +55,11 @@ export const _MessageList = ({
     }
 
     if (!file.type.match('image.*')) {
-      dispatch(DisplayError, new Error('invalid file type'));
+      dispatch(DisplayError(new Error('invalid file type')));
       return false;
     }
 
-    dispatch(SendImage, file);
+    dispatch(SendImage(file));
     return true;
   };
 
@@ -75,7 +76,7 @@ export const _MessageList = ({
         </div>
         <MessageForm
           message={message}
-          onMessageChange={msg => dispatch(InputMessage, msg)}
+          onMessageChange={msg => dispatch(InputMessage(msg))}
           onSubmit={sendMessage}
         />
         <ImageForm onSubmit={sendImage} />
@@ -86,7 +87,7 @@ export const _MessageList = ({
 
 const subscribeMessageFeed = (dispatch: Dispatch) => {
   useEffect(() => {
-    const { promise } = dispatch(SubscribeMessageFeed);
+    const { promise } = dispatch(SubscribeMessageFeed());
     return unsubscribeAsync(promise);
   }, []);
 };
