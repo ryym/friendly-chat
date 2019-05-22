@@ -1,10 +1,10 @@
 import { action, effect } from 'redy';
-import * as auth from '../../backend/auth';
-import * as messages from '../../backend/messages';
-import * as notif from '../../backend/notification';
-import { User, SavedMessage } from '../../backend/types';
-import { Thunk } from '../types';
-import { State } from '../../state';
+import * as auth from '../backend/auth';
+import * as messages from '../backend/messages';
+import * as notif from '../backend/notification';
+import { User, SavedMessage } from '../backend/types';
+import { Thunk } from './types';
+import { State } from '../state';
 
 export const SignIn = effect('SIGN_IN', () => async () => auth.signIn());
 

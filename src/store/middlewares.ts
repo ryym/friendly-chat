@@ -1,8 +1,8 @@
 import { Middleware, Dispatch, AnyAction } from 'redux';
 import logger from 'redux-logger';
 import { redyMiddleware, isRedyAction } from 'redy';
-import { State } from '../../state';
-import { DisplayError } from '../actions';
+import { State } from '../state';
+import { DisplayError } from './actions';
 
 export const listMiddlewares = () => {
   return [logger, errorCatcher(), redyMiddleware()];

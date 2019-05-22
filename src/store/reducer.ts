@@ -1,6 +1,6 @@
 import { defineReducer, on } from 'redy';
 import { combineReducers } from 'redux';
-import { User, SavedMessage } from '../../backend/types';
+import { User, SavedMessage } from '../backend/types';
 import {
   SignInOk,
   SignOutOk,
@@ -8,8 +8,8 @@ import {
   DisplayMessage,
   InputMessage,
   DisplayError,
-} from '../actions';
-import { State } from '../../state';
+} from './actions';
+import { State } from '../state';
 
 const reduceUser = defineReducer<User | null>(null, [
   on(SignInOk, (_, user) => user),
